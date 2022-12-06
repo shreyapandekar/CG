@@ -1,0 +1,52 @@
+#include <iostream>
+#include <graphics.h>
+#include<math.h>
+using namespace std;
+void ddaline(int x1,int y1,int x2, int y2)
+{
+    int dx = x2-x1,dy=y2-y1,steps;
+    float x=x1,y=y1,xinc,yinc;
+    if(abs(dx)>abs(dy))
+        steps =abs(dx);
+    else
+        steps=abs(dy);
+    xinc=(float)dx/(float) steps;
+    yinc=(float)dy/(float) steps;
+    
+    for(int i=0;i<steps;i++)
+    {
+        putpixel(round(x),round(y),RED);
+        x += xinc;
+        y += yinc;
+    }
+}
+int main()
+{
+    int gd=DETECT,gm;
+    initgraph(&gd,&gm,NULL);
+    int x1,x2,y1,y2;
+    cout<<"Entr the coordinates"<<endl;
+    cin>>x1>>y1>>x2>>y2;
+    ddaline(x1,y1,x2,y1);
+    ddaline(x2,y1,x2,y2);
+    ddaline(x2,y2,x1,y2);
+    ddaline(x1,y2,x1,y1);
+    
+    //RHOMBUS
+    ddaline(x1,(y1+y2)/2,(x1+x2)/2,y1); 
+    ddaline((x1+x2)/2,y1,x2,(y1+y2)/2);
+    ddaline(x2,(y1+y2)/2,(x1+x2)/2,y2);
+    ddaline((x1+x2)/2,y2,x1,(y1+y2)/2);
+     
+    
+    //TRIANGLE
+    ddaline((3*x1+x2)/4,(3*y1+y2)/4,(x1+3*x2)/4,(3*y1+y2)/4);
+    ddaline((x1+3*x2)/4,(3*y1+y2)/4,(x1+3*x2)/4,(y1+3*y2/4));
+    ddaline((x1+3*x2)/4,(y1+3*y2/4),(3*x1+x2)/4,(y1+3*y2)/4);
+    ddaline((3*x1+x2)/4,(y1+3*y2)/4,(3*x1+x2)/4,(3*y1+y2)/4);
+    
+    
+    delay(10000);
+    closegraph();
+    return 0;
+}    
