@@ -1,0 +1,48 @@
+#include <iostream>
+#include <graphics.h>
+using namespace std;
+
+int main()
+{
+    int xc,yc,r;
+    int gdriver = DETECT,gmode;
+    initgraph(&gdriver,&gmode,NULL);
+
+    for(int i = 0;i<getmaxx()-100;i++)
+    {
+        line(0,450,getmaxx(),450);
+        setcolor(YELLOW);
+        circle(50+1,275,25);
+        setcolor(GREEN);
+        rectangle(25+i,300,75+i,400);
+        setcolor(BLUE);
+        line(35+i,400,65+i,450);
+        line(65+i,400,35+i,450);
+
+        //Hand
+        line(75+i,355,100+i,310);
+        if(i%2==0)
+        {
+            setcolor(WHITE);
+            line(50+i,320,0+i,360);
+        }
+        else{
+            line(25+i,335,0+i,360);
+        }
+        //Umbrella
+        line(100+i,310,100+i,240);
+        line(25+i,240,175+i,240);
+        arc(100+i,240,180,0,75);
+
+        for(int k=0;k<100;k++)
+        {
+            int x=rand()%getmaxx();
+            int y=rand()%getmaxy();
+            line(x,y,x+4,y+4);
+        }
+        delay(500);
+        cleardevice();
+    }
+    closegraph();
+    return 0;
+}
