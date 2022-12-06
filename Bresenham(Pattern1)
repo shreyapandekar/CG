@@ -1,0 +1,79 @@
+#include<iostream>
+#include<graphics.h>
+#include<math.h>
+using namespace std;
+
+void ddaline(int x1,int y1,int x2, int y2)
+{
+    int dx = x2-x1,dy=y2-y1,steps;
+    float x=x1,y=y1,xinc,yinc;
+    if(abs(dx)>abs(dy))
+        steps =abs(dx);
+    else
+        steps=abs(dy);
+    xinc=(float)dx/(float) steps;
+    yinc=(float)dy/(float) steps;
+    
+    for(int i=0;i<steps;i++)
+    {
+        putpixel(round(x),round(y),RED);
+        x += xinc;
+        y += yinc;
+    }
+}
+void drawcircle(int xc,int yc,int x,int y)
+{
+    putpixel(xc+x,yc-y,RED);
+    putpixel(xc-x,yc-y,RED);
+    putpixel(xc+x,yc+y,RED);
+    putpixel(xc-x,yc+y,RED);
+    putpixel(xc+y,yc-x,RED);
+    putpixel(xc-y,yc-x,RED);
+    putpixel(xc+y,yc+x,RED);
+    putpixel(xc-y,yc+x,RED);
+}
+void bresenham_circle(int xc,int yc,int r)
+{
+    int x=0;
+    int y=r;
+    int d=3-(2*r);
+    while (x<=y)
+    {
+        drawcircle(xc,yc,x,y);
+        x=x+1;
+        if (d<0)
+        {
+            d=d+(4*x)+6;
+        }    
+        else
+        {
+            y=y-1;
+            d=d+4*(x-y)+10;
+        }
+     }
+}
+
+int main()     
+{
+    int xc=200,yc=200,r=100;
+    int d=(sqrt(3)/2)*r;
+    int gd=DETECT,gm;
+    initgraph(&gd,&gm,NULL);
+    bresenham_circle(xc,yc,r);
+    
+    line(xc,yc-r,xc+d,yc+(r/2));
+    line(xc+d,yc+(r/2),xc-d,yc+(r/2));
+    line(xc-d,yc+(r/2),xc,yc-r);
+    bresenham_circle(xc,yc,(r/2));
+    
+    
+    delay(5000);
+    closegraph();
+  
+    return 0;
+}   
+    
+    
+    
+    
+    
