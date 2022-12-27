@@ -20,11 +20,44 @@ void ddaline(int x1,int y1,int x2, int y2)
         y += yinc;
     }
 }
+
+void drawcircle(int xc,int yc,int x,int y)
+{
+    putpixel(xc+x,yc-y,RED);
+    putpixel(xc-x,yc-y,RED);
+    putpixel(xc+x,yc+y,RED);
+    putpixel(xc-x,yc+y,RED);
+    putpixel(xc+y,yc-x,RED);
+    putpixel(xc-y,yc-x,RED);
+    putpixel(xc+y,yc+x,RED);
+    putpixel(xc-y,yc+x,RED);
+}
+void bresenham_circle(int xc,int yc,int r)
+{
+    int x=0;
+    int y=r;
+    int d=3-(2*r);
+    while (x<=y)
+    {
+        drawcircle(xc,yc,x,y);
+        x=x+1;
+        if (d<0)
+        {
+            d=d+(4*x)+6;
+        }    
+        else
+        {
+            y=y-1;
+            d=d+4*(x-y)+10;
+        }
+     }
+}
 int main()
 {
     int gd=DETECT,gm;
     initgraph(&gd,&gm,NULL);
     int x1,x2,y1,y2;
+    int D,d,r;
     cout<<"Entr the coordinates"<<endl;
     cin>>x1>>y1>>x2>>y2;
     ddaline(x1,y1,x2,y1);
@@ -39,14 +72,15 @@ int main()
     ddaline((x1+x2)/2,y2,x1,(y1+y2)/2);
      
     
-    //TRIANGLE
-    ddaline((3*x1+x2)/4,(3*y1+y2)/4,(x1+3*x2)/4,(3*y1+y2)/4);
-    ddaline((x1+3*x2)/4,(3*y1+y2)/4,(x1+3*x2)/4,(y1+3*y2/4));
-    ddaline((x1+3*x2)/4,(y1+3*y2/4),(3*x1+x2)/4,(y1+3*y2)/4);
-    ddaline((3*x1+x2)/4,(y1+3*y2)/4,(3*x1+x2)/4,(3*y1+y2)/4);
+    //INNER CRICLE
+	D=x2-x1;
+	d=y2-y1;
+	r=(D*d)/(2*sqrt((D*D)+(d*d)));
+    bresenham_circle((x1+x2)/2,(y1+y2)/2,r);
     
-    
-    delay(10000);
+    delay(100000);
     closegraph();
     return 0;
-}    
+}
+
+/* 50 50 300 300 */    
