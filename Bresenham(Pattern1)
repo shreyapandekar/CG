@@ -67,7 +67,7 @@ int main()
     bresenham_circle(xc,yc,(r/2));
     
     
-    delay(5000);
+    delay(100000);
     closegraph();
   
     return 0;
